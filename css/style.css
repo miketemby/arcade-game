@@ -1,0 +1,58 @@
+body {
+    text-align: center;
+    position: relative;
+}
+
+.scoreScreen {
+    display: block;
+    /* visibility: hidden; */
+    position: absolute;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    top: 300px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* font-size: 0; */
+    /* color: rgba(255,0,0,1); */
+    /* transition: font-size 2s ease-in, color 1.8s ease-in; */
+
+}
+
+/* .scoreScreen.show {
+    visibility: visible;
+    color: rgba(255,0,0,0);
+    font-size: 500px
+} */
+
+.overlay {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    font-size: 22px;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 0 8px 2px lightgray;
+}
+.overlay .text-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+
+} 
+.overlay .image-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 5px 10px;
+
+} 
+
+.overlay .image-container img {
+    object-fit: contain;
+}
