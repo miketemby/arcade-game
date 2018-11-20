@@ -1,21 +1,16 @@
 // Enemies our player must avoid
-var Enemy = function() {
+var Enemy = function(x, y) {
 
     // create x and y coordinate object parameters
-    this.x = 0;
-    this.y = 0;
 
-    // set initial speed
-    this.speed = function() {
-        return Math.floor(Math.random()*(500-50+1)+20);
-    }();
+    // updated to take parameters on enemy creation (good idea)
+    this.x = x;
+    this.y = y;
 
-    // method to change speed
-    this.changeSpeed = function() {
-        this.speed = Math.floor(Math.random()*(500-50+1)+20);
-    };
+    // set initial speed using new prototype method
+    this.speed = this.randomSpeed();
 
-
+ 
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -45,7 +40,9 @@ Enemy.prototype.update = function(dt) {
     // if object moves off screen, move it back to start and change speed
     if(this.x > 505 ) {
         this.x = - 100;
-        this.changeSpeed();
+
+        // updated to use new prototype method
+        this.speed = this.randomSpeed();
     }
 
 
@@ -56,6 +53,16 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+
+// speed setting method added to prototype
+Enemy.prototype.randomSpeed = function() {
+    return Math.floor(Math.random()*(500-50+1)+20);
+};
+
+
+
+
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -71,16 +78,16 @@ var Player = function() {
 Player.prototype.update = function(direction) {
     switch (direction) {
         case 'left':
-        this.x = this.x - 101;
+            this.x = this.x - 101;
         break;
         case 'right':
-        this.x = this.x + 101;
+            this.x = this.x + 101;
         break;
         case 'up':
-        this.y = this.y - 83;
+            this.y = this.y - 83;
         break;
         case 'down':
-        this.y = this.y + 83;
+            this.y = this.y + 83;
         break;
     };
 
@@ -99,28 +106,28 @@ Player.prototype.handleInput = function(direction) {
     //capture arrow click and send direction to update() method
         switch (direction) {
             case 'left':
-            if(this.x == 0) {
-            } else {
-                player.update('left');
-            }
+                    if(this.x == 0) {
+                } else {
+                    player.update('left');
+                }
             break;
             case 'up':
-            if(this.y == -32) {
-            } else {
-                player.update('up') 
-            }
+                    if(this.y == -32) {
+                } else {
+                    player.update('up') 
+                }
             break;
             case 'right':
-            if(this.x == 404) {
-            } else {
-                player.update('right')
-            }
-             break;
-             case 'down':
-             if(this.y == 383) {
-             } else {
-                player.update('down')
-             }
+                    if(this.x == 404) {
+                } else {
+                    player.update('right')
+                }
+            break;
+            case 'down':
+                if(this.y == 383) {
+                } else {
+                    player.update('down')
+                }
             break;
         }
 };
@@ -180,10 +187,6 @@ const Game = (function() {
     return function Game() {
         
         // return methods
-        this.someVariable = function() {
-            return someVariable;
-        };
-
         this.allCollectables = function() {
             return allCollectables;
         };
@@ -230,10 +233,7 @@ const Game = (function() {
                 // add collectable bonus to score
                 score += this.bonus;
 
-            } else {
-                console.log(`this method must be called using 'call' method from a Collectable item
-                It does not do anything on a Game object`);
-            }
+            } 
         };
 
 
@@ -357,20 +357,8 @@ setInterval(function () {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-let enemy1 = new Enemy();
-enemy1.x = 0;
-enemy1.y = 217;
-
-let enemy2 = new Enemy();
-enemy2.x = 0;
-enemy2.y = 134;
-
-let enemy3 = new Enemy();
-enemy3.x = 0;
-enemy3.y = 51;
-
-
-let allEnemies = [enemy1, enemy2, enemy3];
+// much cleaner (thanks)
+let allEnemies = [new Enemy(0,217), new Enemy(0,134), new Enemy(0,51)];
 
 let player = new Player();
 
